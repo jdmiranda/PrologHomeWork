@@ -1,0 +1,82 @@
+Jeremy Miranda
+N01257133
+Dr. Kane
+Winter 2014
+Concepts of Programming Languages
+
+Assignment 3
+ 
+ Chapter 16
+ 1.  Using the structures parent(X, Y), male(X), and female(X), write a structure that defines mother(X, Y).
+ 
+ mother(X,Y) :- parent(X,Y), female(X).
+ 
+ If X is a parent and X is female, then X is the mother of Y.
+ 
+ 2.  Using the structures parent(X, Y), male(X), and female(X), write a structure that defines sister(X, Y).
+ 
+ sibling(X,Y) :- parent(M,X), parent(M,Y), not(X = Y).
+ sister(X,Y) :- sibling(X,Y), female(X).
+ 
+ If X is a sibling of Y, and X is female, then X is the sister of Y.
+ 
+ 3.  Write a Prolog program that finds the maximum of a list of numbers.  
+ 
+maximum_number([X],X).
+maximum_number([X|Y],X):- maximum_number(Y,Z), X >= Z.
+maximum_number([X|Y],N):- maximum_number(Y,N), N > X.
+
+X is an element of the list. Looks to see if the first element is greater than or equal to each element. This uses recursion to go through all the members. Returns the maximum value. 
+
+ 4.  Write a Prolog program that succeeds if the intersection of two given list  parameters is empty.
+ 
+ intersection_empty([X],[Y]).
+intersection_empty(X,Y):-intersection(X,Y,[]).
+
+Takes 2 lists X and Y. Returns true if the intersection of the two lists is an empty list. 
+
+ 5.  Write a Prolog program that returns a list containing the union of the  elements of two given lists.
+ 
+ union_list([],X,X).
+union_list([X|Y],Z,W):- member(X,Z),!,union_list(Y,Z,W).
+union_list([X|Y],Z,[X|W]):- union_list(Y,Z,W).
+
+Takes 2 lists. If X is a member of list Z then it cuts. Else it continues with all elements except the first element. Returns the union of the two sets.
+ 
+ 6.  Write a Prolog program that returns the final element of a given list.  
+ 
+ final(X,[X]).
+final(X,[Y|Z]):- final(X,Z).
+
+X is a member of list X. Removes the first element of the list recursively. Returns the last element of the list.
+
+ 7.  Write a Prolog program that implements quicksort.
+ 
+quicksort([],[]).
+quicksort(X|Tail,Sorted):- split(X,Tail,Small,Big), quicksort(Small,SortedSmall), quicksort(Big,SortedBig),append(SortedSmall,[X|SortedBig], Sorted).
+split(_X, [], [],[]).
+split(X,[Y|Tail],Big):- X >= Y, split(X,Tail,Small,Big).
+split(X,[Y|Tail],Small,Y|Big]:- X < Y, split(X,Tail,Small,Big).
+
+Takes 2 lists. Takes the first element sorts it into 2 new lists. Split splits the numbers into larger and smaller numbers. Also does the comparisons. 
+
+Chapter 15
+
+ 1. Write a Scheme function that computes the volume of a sphere, given its  radius.
+
+(define pi 3.14159)
+(define (sphere_volume radius)
+ (*(/ 4 3)pi 
+  (expt radius 3)))
+  
+ 4. Write a Scheme function that takes two numeric parameters, A and B, 
+and returns A raised to the B power.
+
+ (define (power A B)
+  (expt A B))
+
+  5. 
+ (define (count lst)
+  (foldr (lambda (element count)
+          (if (0? element) (+ count 1) count))
+		  0 lst))
